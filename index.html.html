@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9aa2, #ff6f91);
+    overflow: hidden;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.5;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-10vh);
+        opacity: 0.6;
+    }
+}
+
+/* Center wrapper */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.screen {
+    display: none;
+    max-width: 400px;
+    background: white;
+    padding: 32px 26px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: fadeIn 0.7s ease;
+}
+
+.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+    margin-top: 18px;
+    padding: 12px 22px;
+    
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    border-color: #ff3f6c;
+}
+
+#yesBtn {
+    background: #ff3f6c;
+    color: white;
+}
+
+#noBtn {
+    background: #ccc;
+    color: #444;
+    margin-left: 10px;
+}
+
+p {
+    color: #ff3f6c;
+}
+
+h1 {
+    color: #ff3f6c;
+}
+
+h2 {
+    color: #ff3f6c;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<div class="wrapper">
+
+    <div id="step1" class="screen active">
+        <h1>Hey Agyeiwaa…</h1>
+        <button onclick="next(2)">Click Me</button>
+    </div>
+
+    <div id="step2" class="screen">
+        <p>We've made some memories...</p>
+        <button onclick="next(3)">Next</button>
+    </div>
+
+    <div id="step3" class="screen">
+        <p style="font-size:2.2em;">You make me smile every single day...</p>
+        <button onclick="next(4)">Next</button>
+    </div>
+
+        <div id="step4" class="screen">
+        <p style="font-size:2.2em;">So I have a question...</p>
+        <button onclick="next(5)">Next</button>
+    </div>
+
+    <div id="step5" class="screen">
+        <h2 style="font-family: cursive;">Will you be my Valentine?</h2>
+        <p style="font-size:0.9em;">(I promise to buy you chocolate)</p>
+
+        <button id="yesBtn" onclick="next(6)">YES!</button>
+        <button id="noBtn" onclick="noClicked()">No</button>
+    </div>
+
+    <div id="step6" class="screen">
+        <h2>She said YES! 💕</h2>
+        <p>Clock it🤏</p>
+        <p>I love you! ❤️</p>
+        <p style="font-size:0.8em;color:#555;">Screenshot this and send it to me!</p>
+    </div>
+
+</div>
+
+<script>
+/* Navigation */
+function next(step) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+}
+
+/* Floating hearts */
+const heartsContainer = document.getElementById('hearts');
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '🤏';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (16 + Math.random() * 22) + 'px';
+    heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 12000);
+}
+setInterval(createHeart, 400);
+
+/* Playful NO logic */
+let noClicks = 0;
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+
+function noClicked() {
+    noClicks++;
+
+    noBtn.style.transform = `scale(${1 - noClicks * 0.25})`;
+    noBtn.style.opacity = `${1 - noClicks * 0.3}`;
+
+    yesBtn.style.transform = `scale(${1 + noClicks * 0.25})`;
+
+    if (noClicks >= 3) {
+        noBtn.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>
